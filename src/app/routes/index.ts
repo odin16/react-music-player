@@ -1,8 +1,7 @@
-import Home from '@src/app/views/home';
+import Album from '@app/views/album';
+import Artist from '@app/views/artist';
 import Genres from '@app/views/genres';
-import Artists from '@app/views/artists';
-import Albums from '@app/views/albums';
-import Songs from '@app/views/songs';
+import Home from '@src/app/views/home';
 
 const routes = [
   {
@@ -16,18 +15,17 @@ const routes = [
     exact: true
   },
   {
-    path: '/artists',
-    component: Artists,
+    path: '/artist/:id/',
+    component: Artist,
     exact: true
   },
   {
-    path: '/albums',
-    component: Albums,
+    path: '/album/:id/',
+    component: Album,
     exact: true
   },
   {
-    path: '/songs',
-    component: Songs,
+    path: '/song/:id/',
     exact: true
   }
 ];

@@ -9,7 +9,6 @@ import { all } from 'redux-saga/effects';
 import * as reducers from './reducers';
 import sagas from './sagas';
 // import storage from 'redux-persist/lib/storage';
-// import { fakeState } from './fake-state';
 
 // Options for redux dev tools
 const composeEnhancers = composeWithDevTools({

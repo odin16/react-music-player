@@ -1,5 +1,5 @@
 import { Artist } from '@shared/index';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Page from './page';
 import { fetchArtists } from './redux/actions';
@@ -9,15 +9,10 @@ const Home: FC = () => {
   const artists = useSelector<RootState, Artist[]>(({ home }) => home.artists);
 
   useEffect(() => {
-    console.log('Consultando artistas...');
     dispatch(fetchArtists.request());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log('Artistas: ', artists);
-  }, [artists]);
-
-  return <Page />;
+  return useMemo(() => <Page artists={artists} />, [artists]);
 };
 
 export default Home;
