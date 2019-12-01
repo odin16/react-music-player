@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
-import * as reducers from './reducers';
+import reducers from './reducers';
 import sagas from './sagas';
 // import storage from 'redux-persist/lib/storage';
 

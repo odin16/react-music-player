@@ -1,5 +1,5 @@
-import homeRootSaga from '@app/views/home/redux/sagas';
-import artistRootSaga from '@app/views/artist/redux/sagas';
-import albumRootSaga from '@app/views/album/redux/sagas';
+import { rootSaga as albumRootSaga } from '@app/components/Album';
+import { rootSaga as artistRootSaga } from '@app/components/Artist';
+import { rootSaga as homeRootSaga } from '@app/components/Home';
 
 export default [...homeRootSaga, ...artistRootSaga, ...albumRootSaga];

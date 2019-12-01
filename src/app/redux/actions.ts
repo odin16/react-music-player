@@ -1,3 +1,5 @@
-export * from '@app/views/home/redux/actions';
-export * from '@app/views/artist/redux/actions';
-export * from '@app/views/album/redux/actions';
+import { actions as albumActions } from '@app/components/Album';
+import { actions as artistActions } from '@app/components/Artist';
+import { actions as homeActions } from '@app/components/Home';
+
+export default { ...albumActions, ...artistActions, ...homeActions };

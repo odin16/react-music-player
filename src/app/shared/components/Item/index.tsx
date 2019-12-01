@@ -1,7 +1,6 @@
-import React, { CSSProperties } from 'react';
-import { Link } from 'react-router-dom';
-import styles from './styles.module.scss';
 import { Avatar, Typography } from '@material-ui/core';
+import React, { CSSProperties } from 'react';
+import styles from './styles.module.scss';
 
 export interface ItemProps {
   image: string;

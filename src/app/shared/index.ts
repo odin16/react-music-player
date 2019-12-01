@@ -1,5 +1,4 @@
-export * from './api';
+export * from './api-service';
 export * from './components';
 export * from './models';
 export * from './utils';
-

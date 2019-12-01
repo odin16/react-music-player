@@ -1,0 +1,33 @@
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  border-bottom: solid 1px rgba(#ffff, 0.1);
+  padding: 1em 0;
+
+  .name {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    span {
+      width: 24px;
+      height: 24px;
+      margin-left: 1rem;
+      margin-right: 2rem;
+      font-size: medium;
+    }
+  }
+
+  &:hover .name span {
+    content: url('../../../../../assets/imgs/baseline_play_arrow_white_18dp.png');
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .time {
+    display: flex;
+    align-items: center;
+  }
+}

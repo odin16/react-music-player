@@ -1,0 +1,30 @@
+.main {
+  .banner {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    background-color: #1d1d1d;
+    border-bottom: solid 1px rgba(#ffff, 0.15);
+
+    .info {
+      margin-left: 2rem;
+
+      button {
+        margin-top: 2rem;
+      }
+    }
+  }
+
+  .title {
+    margin: 0 2rem;
+
+    &:nth-child(1) {
+      margin-top: 2rem;
+    }
+  }
+
+  .songList {
+    width: 100%;
+    padding: 3rem;
+  }
+}

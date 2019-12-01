@@ -8,16 +8,14 @@ import store, { history } from './redux';
 import routes from './routes';
 import Theme from './theme';
 
+const getRoutes = () => routes.map(route => <Route key={route.path} {...route} />);
+
 const App: FC = () => (
   <ReduxProvider store={store}>
     <ConnectedRouter history={history}>
       <ThemeProvider theme={Theme}>
         <CssBaseline />
-        <Switch>
-          {routes.map(route => (
-            <Route key={route.path} {...route} />
-          ))}
-        </Switch>
+        <Switch>{getRoutes()}</Switch>
       </ThemeProvider>
     </ConnectedRouter>
   </ReduxProvider>

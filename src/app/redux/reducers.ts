@@ -1,3 +1,5 @@
-export { default as home } from '@app/views/home/redux';
-export { default as artist } from '@app/views/artist/redux';
-export { default as album } from '@app/views/album/redux';
+import { rootReducer as album } from '@app/components/Album';
+import { rootReducer as artist } from '@app/components/Artist';
+import { rootReducer as home } from '@app/components/Home';
+
+export default { album, artist, home };
