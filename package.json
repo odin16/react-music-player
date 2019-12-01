@@ -1,6 +1,7 @@
 {
   "name": "react-music-player",
   "version": "1.0.0",
+  "homepage": "https://odin16.github.io/react-music-player",
   "dependencies": {
     "@material-ui/core": "^4.7.0",
     "@material-ui/icons": "^4.5.1",
@@ -32,6 +33,7 @@
     "@types/redux-saga": "^0.10.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
+    "gh-pages": "^2.1.1",
     "node-sass": "^4.13.0",
     "prettier": "^1.19.1",
     "react-scripts": "3.2.0",
@@ -46,7 +48,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
