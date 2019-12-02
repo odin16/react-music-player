@@ -1,13 +1,19 @@
-import { Album } from '@shared/index';
+import { Artist } from '@shared/index';
 import { combineReducers } from 'redux';
 import { createReducer } from 'typesafe-actions';
-import { fetchAlbums } from './actions';
+import { fetchArtists, setCurrentArtist, fetchArtist } from './actions';
 
-const albums = createReducer<Album[]>([]).handleAction(
-  fetchAlbums.success,
-  (state, { payload }) => [...state, ...payload]
+const current = createReducer<Artist | null>(null).handleAction(
+  [setCurrentArtist, fetchArtist.success],
+  (_, { payload }) => payload
+);
+
+const all = createReducer<Artist[]>([]).handleAction(
+  fetchArtists.success,
+  (_, { payload }) => payload
 );
 
 export default combineReducers({
-  albums
+  all,
+  current
 });

@@ -1,16 +1,30 @@
-import { Album, getAllAlbums } from '@shared/index';
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { fetchAlbums } from './actions';
+import { Artist, getAllArtists, getArtistById } from '@shared/index';
+import { call, put, takeLatest, fork, take } from 'redux-saga/effects';
+import { fetchArtists, fetchArtist } from './actions';
 
-function* getAlbumList({
-  payload
-}: ReturnType<typeof fetchAlbums.request>): Generator<any, any, Album[]> {
+function* getArtistList(): Generator<any, any, Artist[]> {
   try {
-    const data = yield call(getAllAlbums, payload);
-    yield put(fetchAlbums.success(data));
+    const data = yield call(getAllArtists);
+    yield put(fetchArtists.success(data));
   } catch (err) {
-    yield put(fetchAlbums.failure(err));
+    yield put(fetchArtists.failure(err));
   }
 }
 
-export default [takeLatest(fetchAlbums.request, getAlbumList)];
+function* getArtist(id: number): Generator<any, any, Artist> {
+  try {
+    const data = yield call(getArtistById, id);
+    yield put(fetchArtist.success(data));
+  } catch (err) {
+    yield put(fetchArtist.failure(err));
+  }
+}
+
+function* watchGetArtist(): Generator<any, any, number> {
+  while (true) {
+    const idArtist = yield take(fetchArtist.request);
+    yield call(getArtist, idArtist);
+  }
+}
+
+export default [takeLatest(fetchArtists.request, getArtistList), fork(watchGetArtist)];

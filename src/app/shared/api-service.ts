@@ -6,37 +6,60 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+const artistReducer = <T>(data: any): T => {
+  const artist = (a: any) => ({
+    location: `/artist/${a.id}/`,
+    spotifyUrl: a.spotify_url,
+    spotifyId: a.spotify_id,
+    createdAt: new Date(a.created_at),
+    updatedAt: new Date(a.updated_at),
+    ...(pick(['id', 'name', 'image', 'genres', 'popularity'], a) as any)
+  });
+
+  return Array.isArray(data) ? data.map(a => artist(a)) : artist(data);
+};
+
 export const getAllArtists = async () => {
   try {
     const res = await fetch(`${config.API_URL}/artists`);
     const { data = [] }: ApiResponse<any[]> = await res.json();
 
-    return data.map(e => ({
-      location: `/artist/${e.id}/`,
-      spotifyUrl: e.spotify_url,
-      spotifyId: e.spotify_id,
-      createdAt: new Date(e.created_at),
-      updatedAt: new Date(e.updated_at),
-      ...pick(['id', 'name', 'image', 'genres', 'popularity'], e)
-    })) as Artist[];
+    return artistReducer<Artist[]>(data);
   } catch (err) {
     console.error('The list of artists of the api could not be consulted.', err);
     return [];
   }
 };
 
-export const getAllAlbums = async (idArtist: number): Promise<Album[]> => {
+export const getArtistById = async (id: number) => {
+  try {
+    const res = await fetch(`${config.API_URL}/artists/${id}`);
+    const { data = {} }: ApiResponse<any> = await res.json();
+
+    return artistReducer<Artist>(data);
+  } catch (err) {
+    console.error(`Error when consulting the artist: ${id}`, err);
+  }
+};
+
+const albumReducer = <T>(data: any, idArtist: number): T => {
+  const album = (a: any) => ({
+    idArtist,
+    location: `/album/${a.id}/`,
+    spotifyUrl: a.spotify_url,
+    totalTracks: a.total_tracks,
+    ...(pick(['id', 'name', 'image'], a) as any)
+  });
+
+  return Array.isArray(data) ? data.map(a => album(a)) : album(data);
+};
+
+export const getAllAlbums = async (idArtist: number) => {
   try {
     const res = await fetch(`${config.API_URL}/artists/${idArtist}/albums`);
     const { data = [] }: ApiResponse<any[]> = await res.json();
 
-    return data.map(e => ({
-      idArtist,
-      location: `/album/${e.id}/`,
-      spotifyUrl: e.spotify_url,
-      totalTracks: e.total_tracks,
-      ...pick(['id', 'name', 'image'], e)
-    })) as Album[];
+    return albumReducer<Album[]>(data, Number(idArtist));
   } catch (err) {
     console.error(`Couldn't check artist: "${idArtist}" albums.`, err);
     return [];

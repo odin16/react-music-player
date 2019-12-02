@@ -9,3 +9,7 @@ export function msToTime(duration: any) {
 
   return `${hh === '00' ? '' : hh + ':'}${mm === '00' ? '' : mm + ':'}${ss}`;
 }
+
+export const newTab = (url: string) => window.open(url, '_blank');
+
+export const getRandomItem = <T>(items: T[]) => items[Math.floor(Math.random() * items.length)];

@@ -13,19 +13,26 @@ export const SongItem = (props: SongProps) => {
   const { order, song, handleClick } = props;
 
   return (
-    <div className={styles.main}>
-      <div className={styles.name} onClick={handleClick}>
-        <span>{order}</span>
-        <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
+    <div className={styles.main} onClick={handleClick}>
+      <div className={styles.order}>
+        <Typography variant="subtitle1">{order}</Typography>
+      </div>
+      <div className={styles.name}>
+        <Typography
+          variant="subtitle1"
+          style={{
+            fontWeight: 'bold'
+          }}
+        >
           {song.name}
         </Typography>
-      </div>
-      <div className={styles.time}>
         {!song.previewUrl && (
-          <Typography variant="subtitle2" color="error" style={{ marginRight: '2rem' }}>
+          <Typography variant="subtitle2" color="error">
             No hay preview
           </Typography>
         )}
+      </div>
+      <div className={styles.time}>
         <Typography variant="subtitle1">{msToTime(song.durationMs)}</Typography>
       </div>
     </div>

@@ -1,37 +1,35 @@
-import { Album } from '@shared/index';
-import React, { FC, useEffect, useState, useMemo, useCallback } from 'react';
+import { Album, Loading } from '@shared/index';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { fetchAlbums, selectAlbumsCurrentArtist, setCurrentAlbum } from '../Album';
 import Page from './Page';
-import { fetchAlbums } from './redux/actions';
-import { push } from 'connected-react-router';
+import { fetchArtist, selectCurrentArtist } from './redux';
 
 export const Artist: FC = () => {
-  const { state } = useLocation();
   const { id } = useParams();
-  const filterAlbumByArtist = (a: Album) => a.idArtist === id;
-
   const dispatch = useDispatch();
-  const allAlbums = useSelector<RootState, Album[]>(({ artist }) => artist.albums);
-  const [albums, setAlbums] = useState<Album[]>([]);
+  const artist = useSelector(selectCurrentArtist);
+  const albums = useSelector(selectAlbumsCurrentArtist);
 
   useEffect(() => {
-    const existAlbums = allAlbums.find(filterAlbumByArtist);
-    if (id && !existAlbums) {
+    if (id && !artist) {
+      dispatch(fetchArtist.request(id));
+    }
+  }, [artist, id, dispatch]);
+
+  useEffect(() => {
+    console.log('useEffect: ', id && !albums.length, id, albums.length);
+    if (id && !albums.length) {
       dispatch(fetchAlbums.request(id));
     }
-  }, [allAlbums, id, dispatch]);
+  }, [albums, id, dispatch]);
 
-  useEffect(() => {
-    if (id && allAlbums.length) {
-      const artistAlbums = allAlbums.filter(filterAlbumByArtist);
-      setAlbums(artistAlbums);
-    }
-  }, [id, allAlbums]);
+  const setSelectedAlbum = (album: Album) => dispatch(setCurrentAlbum(album));
 
-  const goTo = useCallback((location: string, context: any) => dispatch(push(location, context)), [
-    dispatch
-  ]);
-
-  return useMemo(() => <Page artist={state} albums={albums} goTo={goTo} />, [state, albums]);
+  return artist ? (
+    <Page artist={artist} albums={albums} setSelectedAlbum={setSelectedAlbum} />
+  ) : (
+    <Loading fixed mainStyles={{ background: 'rgba(40, 44, 52, 0.2)' }} />
+  );
 };

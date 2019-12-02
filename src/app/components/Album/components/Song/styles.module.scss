@@ -2,32 +2,46 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   text-align: center;
   border-bottom: solid 1px rgba(#ffff, 0.1);
   padding: 1em 0;
+  cursor: pointer;
 
-  .name {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-
-    span {
+  .order {
+    h6 {
       width: 24px;
       height: 24px;
-      margin-left: 1rem;
-      margin-right: 2rem;
-      font-size: medium;
     }
   }
 
-  &:hover .name span {
+  .name {
+    width: 100%;
+    padding: 0 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    flex-wrap: wrap;
+  }
+
+  &:hover .order h6 {
     content: url('../../../../../assets/imgs/baseline_play_arrow_white_18dp.png');
     cursor: pointer;
     border-radius: 50%;
   }
 
   .time {
-    display: flex;
-    align-items: center;
+    text-align: right;
+  }
+
+  @media (max-width: 767px) {
+    .name {
+      width: 75%;
+    }
+
+    .time {
+      width: 20%;
+    }
   }
 }

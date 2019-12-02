@@ -2,4 +2,17 @@
   .title {
     margin: 2.5rem;
   }
+
+  .fab button {
+    animation: shadow-pulse 1.5s infinite;
+  }
+}
+
+@keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(#ffff, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 25px rgba(#ffff, 0);
+  }
 }

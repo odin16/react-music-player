@@ -1,6 +1,7 @@
-import { Artist, getAllArtists, getAllGenres, Song, getRandomSong } from '@shared/index';
-import { call, put, takeLatest, select } from 'redux-saga/effects';
-import { fetchArtists, fetchGenres, fetchRandomSong } from './actions';
+import { getAllGenres, getRandomSong, newTab, Song } from '@shared/index';
+import { path } from 'ramda';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { fetchGenres, fetchRandomSong } from './actions';
 
 function* getGenreList(): Generator<any, any, string[]> {
   try {
@@ -11,20 +12,19 @@ function* getGenreList(): Generator<any, any, string[]> {
   }
 }
 
-function* getArtistList(): Generator<any, any, Artist[]> {
-  try {
-    const data = yield call(getAllArtists);
-    yield put(fetchArtists.success(data));
-  } catch (err) {
-    yield put(fetchArtists.failure(err));
-  }
-}
-
 function* getRandomSongSaga(): Generator<any, any, any> {
   try {
     const genres: string[] = yield select((state: RootState) => state.home.genres);
     const randomGenre = genres[Math.floor(Math.random() * genres.length)];
     const data: Song = yield call(getRandomSong, randomGenre);
+    const previewUrl = path<string>(['previewUrl'], data);
+
+    if (previewUrl) {
+      yield call(newTab, previewUrl);
+    } else {
+      yield put(fetchRandomSong.request());
+    }
+
     yield put(fetchRandomSong.success(data));
   } catch (err) {
     yield put(fetchRandomSong.failure(err));
@@ -33,6 +33,5 @@ function* getRandomSongSaga(): Generator<any, any, any> {
 
 export default [
   takeLatest(fetchGenres.request, getGenreList),
-  takeLatest(fetchArtists.request, getArtistList),
   takeLatest(fetchRandomSong.request, getRandomSongSaga)
 ];

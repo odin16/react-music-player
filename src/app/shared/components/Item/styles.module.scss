@@ -1,12 +1,18 @@
 .main {
   margin: 20px;
   max-width: 200px;
-  
+  cursor: pointer;
+
   .avatar {
-    border: solid 1px rgba(#ffff, .15);
+    border: solid 1px rgba(#ffff, 0.15);
     width: 200px;
-		height: 200px;
-		cursor: pointer;
+    height: 200px;
+    transition: all ease 0.5s;
+  }
+
+  &:hover .avatar {
+    // border: solid 1px rgba(0, 199, 206, 1);
+    animation: shadow-pulse 1.5s infinite;
   }
 
   .link {
@@ -15,13 +21,27 @@
     font-size: large;
     font-weight: 550;
     cursor: pointer;
+    transition: all ease 0.5s;
 
     &:hover {
       text-decoration: underline;
     }
-	}
-	
-	.titles {
-		margin-top: 1em;
-	}
+  }
+
+  &:hover .link {
+    color: rgba(0, 199, 206, 1);
+  }
+
+  .titles {
+    margin-top: 1em;
+  }
+}
+
+@keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(#ffff, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 15px rgba(#ffff, 0);
+  }
 }

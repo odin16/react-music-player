@@ -1,40 +1,30 @@
 import { Typography } from '@material-ui/core';
-import { Album, Artist, Item, ItemList, Title } from '@shared/index';
-import React, { FC, useEffect, useState } from 'react';
+import { Album, Artist, getRandomItem, Item, ItemList, Title } from '@shared/index';
+import React, { FC, memo, useEffect, useState } from 'react';
 import { ColorExtractor } from 'react-color-extractor';
 import styles from './styles.module.scss';
 
 interface PageProps {
   artist: Artist;
   albums: Album[];
-  goTo: (location: string, context: any) => void;
+  setSelectedAlbum: (album: Album) => void;
 }
 
-const Page: FC<PageProps> = props => {
-  const { artist, albums, goTo } = props;
-  const [imageColors, setImageColors] = useState<string[]>([]);
+const Page: FC<PageProps> = memo(props => {
+  const { artist, albums, setSelectedAlbum } = props;
+  const [artistImageColors, setArtistImageColors] = useState<string[]>([]);
   const [backgroundColor, setBackgroundColor] = useState('');
 
   useEffect(() => {
-    if (imageColors.length) {
-      const color = imageColors[Math.floor(Math.random() * imageColors.length)];
+    if (artistImageColors.length) {
+      const color = getRandomItem(artistImageColors);
       setBackgroundColor(color);
     }
-  }, [imageColors]);
-
-  const handleItemClick = (album: Album) => {
-    const shuffled = albums.filter(a => a.id !== album.id).sort(() => 0.5 - Math.random());
-    const suggestedAlbums = shuffled.slice(0, 2);
-
-    goTo(album.location, {
-      albumSelected: album,
-      suggestedAlbums
-    });
-  };
+  }, [artistImageColors]);
 
   return (
     <div className={styles.main}>
-      <ColorExtractor src={artist.image} getColors={setImageColors} />
+      <ColorExtractor src={artist.image} getColors={setArtistImageColors} />
 
       <div
         className={styles.banner}
@@ -60,13 +50,13 @@ const Page: FC<PageProps> = props => {
               title={a.name}
               subtitle={`Canciones • ${a.totalTracks}`}
               variant="rounded"
-              handleClick={() => handleItemClick(a)}
+              handleClick={() => setSelectedAlbum(a)}
             />
           ))}
         </ItemList>
       </div>
     </div>
   );
-};
+});
 
 export default Page;
