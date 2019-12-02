@@ -1,4 +1,4 @@
-import { Album } from '@app/components/Album';
+import { Album, selectCurrentAlbum } from '@app/components/Album';
 import { Artist } from '@app/components/Artist';
 import { Home } from '@app/components/Home';
 import { withState } from '@shared/index';
@@ -16,7 +16,11 @@ const routes = [
   },
   {
     path: '/album/:id/',
-    component: withState(Album),
+    component: withState({
+      component: Album,
+      selector: selectCurrentAlbum,
+      validateNil: true
+    }),
     exact: true
   },
   {

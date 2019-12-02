@@ -1,5 +1,5 @@
 import { Loading } from '@shared/index';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Page from './Page';
@@ -18,8 +18,7 @@ export const Album: FC = () => {
   const songs = useSelector(selectSongsCurrentAlbum);
   const suggestedAlbumsIds = useSelector(selectSuggestedAlbumsIds);
   const suggestedSongs = useSelector(selectSongsSuggestedAlbums);
-
-  // const songsWereConsulted = useRef(false);
+  const suggestedSongsWereConsulted = useRef(false);
 
   useEffect(() => {
     if (!songs.length) {
@@ -28,8 +27,9 @@ export const Album: FC = () => {
   }, [songs, id, dispatch]);
 
   useEffect(() => {
-    if (!suggestedSongs.length) {
+    if (!suggestedSongs.length && !suggestedSongsWereConsulted.current) {
       suggestedAlbumsIds.forEach(id => dispatch(fetchSongs.request(id)));
+      suggestedSongsWereConsulted.current = true;
     }
   }, [suggestedSongs, suggestedAlbumsIds, dispatch]);
 

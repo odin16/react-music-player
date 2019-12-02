@@ -16,12 +16,12 @@ export const Home: FC = () => {
     dispatch(fetchGenres.request());
   }, [dispatch]);
 
-  const playRandomSong = () => dispatch(fetchRandomSong.request());
-
   const setSelectedArtist = (artist: Artist) => {
     dispatch(setCurrentArtist(artist));
     dispatch(push(artist.location));
   };
+
+  const playRandomSong = () => dispatch(fetchRandomSong.request());
 
   return (
     <Page

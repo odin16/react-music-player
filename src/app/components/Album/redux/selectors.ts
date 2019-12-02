@@ -8,7 +8,7 @@ export const selectSongs = (state: RootState) => state.album.songs;
 export const selectAlbumsCurrentArtist = createSelector(
   selectCurrentArtist,
   selectAlbums,
-  (artist, albums) => (artist ? albums.filter(a => a.idArtist === artist.id) : [])
+  (artist, albums) => (artist ? albums.filter(a => Number(a.idArtist) === Number(artist.id)) : [])
 );
 
 export const selectSuggestedAlbumsIds = createSelector(selectAlbumsCurrentArtist, albums =>

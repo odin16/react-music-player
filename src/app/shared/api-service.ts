@@ -44,7 +44,7 @@ export const getArtistById = async (id: number) => {
 
 const albumReducer = <T>(data: any, idArtist: number): T => {
   const album = (a: any) => ({
-    idArtist,
+    idArtist: Number(idArtist),
     location: `/album/${a.id}/`,
     spotifyUrl: a.spotify_url,
     totalTracks: a.total_tracks,
@@ -59,7 +59,7 @@ export const getAllAlbums = async (idArtist: number) => {
     const res = await fetch(`${config.API_URL}/artists/${idArtist}/albums`);
     const { data = [] }: ApiResponse<any[]> = await res.json();
 
-    return albumReducer<Album[]>(data, Number(idArtist));
+    return albumReducer<Album[]>(data, idArtist);
   } catch (err) {
     console.error(`Couldn't check artist: "${idArtist}" albums.`, err);
     return [];
@@ -72,7 +72,7 @@ export const getAllSongs = async (idAlbum: number): Promise<Song[]> => {
     const { data = [] }: ApiResponse<any[]> = await res.json();
 
     return data.map(e => ({
-      idAlbum,
+      idAlbum: Number(idAlbum),
       spotifyUrl: e.spotify_url,
       previewUrl: e.preview_url,
       durationMs: e.duration_ms,

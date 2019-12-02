@@ -20,10 +20,10 @@ function* getArtist(id: number): Generator<any, any, Artist> {
   }
 }
 
-function* watchGetArtist(): Generator<any, any, number> {
+function* watchGetArtist(): Generator<any, any, ReturnType<typeof fetchArtist.request>> {
   while (true) {
-    const idArtist = yield take(fetchArtist.request);
-    yield call(getArtist, idArtist);
+    const { payload } = yield take(fetchArtist.request);
+    yield call(getArtist, payload);
   }
 }
 
