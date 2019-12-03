@@ -1,9 +1,8 @@
 import { Typography } from '@material-ui/core';
-import { Album, Item, Loading, msToTime, Song, Title, newTab } from '@shared/index';
+import { Album, Item, Loading, msToTime, newTab, Song, Title } from '@shared/index';
 import React, { FC, memo } from 'react';
 import { SongItem } from './components';
 import styles from './styles.module.scss';
-import { song } from '@app/__mocks__/data';
 
 export interface PageProps {
   album: Album;
