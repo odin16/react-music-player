@@ -3,12 +3,20 @@ import { render } from 'enzyme';
 import { testId } from '@app/__tests__/helpers/utils';
 import { artist, album, song, suggestedSong } from '@app/__mocks__/data';
 import Page, { msAllSongs } from '@components/Album/Page';
-import { msToTime } from '@shared/index';
+import { msToTime, Song } from '@shared/index';
 
 const mockProps: any = {
   album,
   songs: [song],
   suggestedSongs: [suggestedSong]
+};
+
+const testSong = (wrapper: Cheerio, song: Song, className: string) => {
+  expect(wrapper.find(`.${className} ${testId('song-order')}`).text()).toBe('1');
+  expect(wrapper.find(`.${className} ${testId('song-name')}`).text()).toBe(song.name);
+  expect(wrapper.find(`.${className} ${testId('song-duration')}`).text()).toBe(
+    msToTime(song.durationMs)
+  );
 };
 
 describe('[Album]: <Page />', () => {
@@ -23,8 +31,6 @@ describe('[Album]: <Page />', () => {
     );
   });
 
-  it('Should render album songs', () => {
-    expect(wrapper.find(`${testId('album-songs')} .song-item`)).toHaveLength(1);
-    expect(wrapper.find(`${testId('suggested-songs')} .song-item`)).toHaveLength(1);
-  });
+  it('Should render album songs', () => testSong(wrapper, song, 'album-song'));
+  it('Should render suggested songs', () => testSong(wrapper, suggestedSong, 'suggested-song'));
 });

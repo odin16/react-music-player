@@ -43,7 +43,13 @@ const Page: FC<PageProps> = memo(props => {
         <div className={styles.songList}>
           {!songs.length && <Loading />}
           {songs.map((s, i) => (
-            <SongItem key={i} order={i + 1} song={s} handleClick={() => openPreview(s)} />
+            <SongItem
+              key={i}
+              className="album-song"
+              order={i + 1}
+              song={s}
+              handleClick={() => openPreview(s)}
+            />
           ))}
         </div>
       </div>
@@ -55,7 +61,13 @@ const Page: FC<PageProps> = memo(props => {
         <div className={styles.songList}>
           {!suggestedSongs.length && <Loading />}
           {suggestedSongs.map((s, i) => (
-            <SongItem key={i} order={i + 1} song={s} handleClick={() => openPreview(s)} />
+            <SongItem
+              key={i}
+              className="suggested-song"
+              order={i + 1}
+              song={s}
+              handleClick={() => openPreview(s)}
+            />
           ))}
         </div>
       </div>
