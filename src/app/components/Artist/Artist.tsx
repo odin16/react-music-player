@@ -35,6 +35,6 @@ export const Artist: FC = () => {
   return artist ? (
     <Page artist={artist} albums={albums} setSelectedAlbum={setSelectedAlbum} />
   ) : (
-    <Loading fixed mainStyles={{ background: 'rgba(40, 44, 52, 0.2)' }} />
+    <Loading fix mainStyles={{ background: 'rgba(40, 44, 52, 0.2)' }} />
   );
 };

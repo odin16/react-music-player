@@ -36,6 +36,6 @@ export const Album: FC = () => {
   return album ? (
     <Page album={album} songs={songs} suggestedSongs={suggestedSongs} />
   ) : (
-    <Loading fixed mainStyles={{ background: 'rgba(40, 44, 52, 0.2)' }} />
+    <Loading fix mainStyles={{ background: 'rgba(40, 44, 52, 0.2)' }} />
   );
 };

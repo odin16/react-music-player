@@ -4,7 +4,7 @@ import React, { FC, memo, useEffect, useState } from 'react';
 import { ColorExtractor } from 'react-color-extractor';
 import styles from './styles.module.scss';
 
-interface PageProps {
+export interface PageProps {
   artist: Artist;
   albums: Album[];
   setSelectedAlbum: (album: Album) => void;
@@ -29,11 +29,12 @@ const Page: FC<PageProps> = memo(props => {
       <div
         className={styles.banner}
         style={{ backgroundImage: `url(${artist.image})`, backgroundColor }}
+        test-id="banner"
       >
         <div className={styles.info}>
-          <Title tag="h3" label={artist.name} />
+          <Title tag="h3" label={artist.name} className="name-artist" />
           <Typography className={styles.subtitle} variant="subtitle1" color="primary">
-            {`Popularidad • ${artist.popularity}`}
+            <span test-id="popularity">{`Popularidad • ${artist.popularity}`}</span>
           </Typography>
         </div>
       </div>
@@ -46,6 +47,7 @@ const Page: FC<PageProps> = memo(props => {
           {albums.map((a, i) => (
             <Item
               key={i}
+              className="album"
               image={a.image}
               title={a.name}
               subtitle={`Canciones • ${a.totalTracks}`}

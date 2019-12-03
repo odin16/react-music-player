@@ -4,7 +4,7 @@ import { Artist, Item, ItemList, Loading, Title } from '@shared/index';
 import React, { FC, memo } from 'react';
 import styles from './styles.module.scss';
 
-interface PageProps {
+export interface PageProps {
   artists: Artist[];
   loadingRandomSong: boolean;
   playRandomSong: () => void;
@@ -22,11 +22,12 @@ const Page: FC<PageProps> = memo(props => {
         </div>
 
         <ItemList>
-          {!artists.length && <Loading fixed />}
+          {!artists.length && <Loading fix test-id="loading-artist" />}
 
           {artists.map((a, i) => (
             <Item
               key={i}
+              className="artist"
               image={a.image}
               title={a.name}
               subtitle={`Popularidad • ${a.popularity}`}

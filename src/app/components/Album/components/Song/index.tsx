@@ -13,7 +13,7 @@ export const SongItem = (props: SongProps) => {
   const { order, song, handleClick } = props;
 
   return (
-    <div className={styles.main} onClick={handleClick}>
+    <div className={`${styles.main} song-item`} onClick={handleClick}>
       <div className={styles.order}>
         <Typography variant="subtitle1">{order}</Typography>
       </div>

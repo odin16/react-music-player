@@ -3,19 +3,21 @@ import { CircularProgressProps } from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
 import React, { CSSProperties } from 'react';
 import styles from './styles.module.scss';
+import { omit } from 'ramda';
 
 interface LoadingProps extends CircularProgressProps {
-  fixed: boolean;
-  mainStyles: CSSProperties;
+  fix?: boolean;
+  mainStyles?: CSSProperties;
 }
 
-export const Loading = (props: Partial<LoadingProps>) => {
-  const { fixed, mainStyles } = props;
-  const classes = classNames(styles.main, { [styles.fixed]: !!fixed });
+export const Loading = (props: LoadingProps) => {
+  const { fix, mainStyles } = props;
+  const classes = classNames(styles.main, { [styles.fixed]: !!fix });
+  const circularProgressProps = omit(['fix', 'mainStyles']);
 
   return (
     <div className={classes} style={mainStyles}>
-      <CircularProgress color="secondary" {...props} />
+      <CircularProgress color="secondary" {...circularProgressProps} />
     </div>
   );
 };
